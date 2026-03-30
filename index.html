@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Snake</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="panel">
+        <div class="panel__header">
+          <div>
+            <p class="eyebrow">Classic Arcade</p>
+            <h1>Snake</h1>
+          </div>
+          <button id="restart-button" class="button" type="button">Restart</button>
+        </div>
+
+        <div class="stats" aria-label="Game stats">
+          <div class="stat">
+            <span class="stat__label">Score</span>
+            <strong id="score">0</strong>
+          </div>
+          <div class="stat">
+            <span class="stat__label">Status</span>
+            <strong id="status">Running</strong>
+          </div>
+        </div>
+
+        <div class="board-wrap">
+          <div
+            id="board"
+            class="board"
+            role="grid"
+            aria-label="Snake game board"
+          ></div>
+          <div id="overlay" class="overlay" hidden>
+            <p id="overlay-text" class="overlay__text"></p>
+            <button id="overlay-button" class="button" type="button">Restart</button>
+          </div>
+        </div>
+
+        <div class="controls-copy">
+          <p>Use arrow keys or WASD to move.</p>
+          <p>Press space to pause and resume.</p>
+        </div>
+
+        <div class="controls" aria-label="Touch controls">
+          <button data-direction="up" class="control control--up" type="button">Up</button>
+          <button data-direction="left" class="control control--left" type="button">Left</button>
+          <button data-direction="down" class="control control--down" type="button">Down</button>
+          <button data-direction="right" class="control control--right" type="button">Right</button>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
