@@ -41,17 +41,40 @@
           </div>
         </div>
 
-        <div class="controls-copy">
-          <p>Use arrow keys or WASD to move.</p>
-          <p>Press space to pause and resume.</p>
-        </div>
+        <section class="keyboard" aria-label="iPhone keypad controls">
+          <div class="controls-copy keyboard__copy">
+            <p>Use arrow keys or WASD to move.</p>
+            <p>On iPhone, use the keypad below and tap pause anytime.</p>
+          </div>
 
-        <div class="controls" aria-label="Touch controls">
-          <button data-direction="up" class="control control--up" type="button">Up</button>
-          <button data-direction="left" class="control control--left" type="button">Left</button>
-          <button data-direction="down" class="control control--down" type="button">Down</button>
-          <button data-direction="right" class="control control--right" type="button">Right</button>
-        </div>
+          <div class="keyboard__shell">
+            <div class="keyboard__top-row">
+              <button
+                data-action="pause"
+                class="key key--wide key--secondary"
+                type="button"
+                aria-label="Pause or resume"
+              >
+                Pause
+              </button>
+            </div>
+
+            <div class="controls" aria-label="Touch controls">
+              <button data-direction="up" class="key control control--up" type="button" aria-label="Move up">
+                ↑
+              </button>
+              <button data-direction="left" class="key control control--left" type="button" aria-label="Move left">
+                ←
+              </button>
+              <button data-direction="down" class="key control control--down" type="button" aria-label="Move down">
+                ↓
+              </button>
+              <button data-direction="right" class="key control control--right" type="button" aria-label="Move right">
+                →
+              </button>
+            </div>
+          </div>
+        </section>
       </section>
     </main>
 

@@ -26,6 +26,7 @@ const overlayText = document.querySelector("#overlay-text");
 const restartButton = document.querySelector("#restart-button");
 const overlayButton = document.querySelector("#overlay-button");
 const controlButtons = document.querySelectorAll("[data-direction]");
+const actionButtons = document.querySelectorAll("[data-action]");
 
 let state = createInitialState();
 let timerId = null;
@@ -40,6 +41,11 @@ overlayButton.addEventListener("click", restartGame);
 controlButtons.forEach((button) => {
   button.addEventListener("click", () => {
     state = queueDirection(state, button.dataset.direction);
+  });
+});
+actionButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    handlePauseToggle();
   });
 });
 
@@ -121,13 +127,7 @@ function handleKeydown(event) {
       return;
     }
     event.preventDefault();
-    state = togglePause(state);
-    if (state.isPaused) {
-      stopLoop();
-    } else if (!state.isGameOver) {
-      startLoop();
-    }
-    render();
+    handlePauseToggle();
     return;
   }
 
@@ -142,6 +142,16 @@ function handleKeydown(event) {
 
 function toIndex(position) {
   return position.y * GRID_SIZE + position.x;
+}
+
+function handlePauseToggle() {
+  state = togglePause(state);
+  if (state.isPaused) {
+    stopLoop();
+  } else if (!state.isGameOver) {
+    startLoop();
+  }
+  render();
 }
 
 function isInteractiveElement(target) {
