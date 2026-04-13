@@ -1,20 +1,67 @@
 :root {
   color-scheme: light;
-  --bg: #f3efe6;
-  --panel: #fffaf0;
-  --border: #3d3427;
-  --grid: #d8cdb8;
-  --snake: #2f7d32;
-  --snake-head: #1f5b22;
-  --food: #c94a3f;
-  --text: #211c15;
-  --muted: #6b6255;
-  --button: #efe4cf;
-  --button-active: #e3d4b8;
-  --keyboard-frame: #1f2430;
-  --keyboard-surface: #31394a;
+  --bg: #eef4f1;
+  --panel: #ffffff;
+  --border: #27332e;
+  --board: #dce7e1;
+  --snake: #23834c;
+  --snake-head: #116632;
+  --food: #d54040;
+  --text: #18211d;
+  --muted: #53635b;
+  --button: #f4f7f5;
+  --button-active: #dce7e1;
+  --accent: #2f7d62;
+  --keyboard-frame: #222933;
   --keyboard-key: linear-gradient(180deg, #ffffff 0%, #e9edf6 100%);
   --keyboard-key-shadow: rgba(12, 15, 22, 0.34);
+  --panel-shadow: rgba(31, 47, 40, 0.16);
+  --stats-bg: rgba(255, 255, 255, 0.72);
+  --overlay-bg: rgba(24, 33, 29, 0.7);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #111714;
+  --panel: #19211d;
+  --border: #8ea398;
+  --board: #0c110f;
+  --snake: #64c47e;
+  --snake-head: #9be9a8;
+  --food: #ff6a5f;
+  --text: #eef7f1;
+  --muted: #b0c2b8;
+  --button: #25312b;
+  --button-active: #314139;
+  --accent: #8bd8ad;
+  --keyboard-frame: #090d10;
+  --keyboard-key: linear-gradient(180deg, #38433f 0%, #1f2925 100%);
+  --keyboard-key-shadow: rgba(0, 0, 0, 0.46);
+  --panel-shadow: rgba(0, 0, 0, 0.34);
+  --stats-bg: rgba(255, 255, 255, 0.08);
+  --overlay-bg: rgba(0, 0, 0, 0.72);
+}
+
+:root[data-theme="neon"] {
+  color-scheme: dark;
+  --bg: #071114;
+  --panel: #0d181b;
+  --border: #00f0ff;
+  --board: #020809;
+  --snake: #47ff8a;
+  --snake-head: #d8ff5b;
+  --food: #ff2bd6;
+  --text: #e9ffff;
+  --muted: #8ed7dd;
+  --button: #11272c;
+  --button-active: #17363c;
+  --accent: #00f0ff;
+  --keyboard-frame: #05090b;
+  --keyboard-key: linear-gradient(180deg, #1b4047 0%, #10252a 100%);
+  --keyboard-key-shadow: rgba(0, 240, 255, 0.28);
+  --panel-shadow: rgba(0, 240, 255, 0.28);
+  --stats-bg: rgba(0, 240, 255, 0.08);
+  --overlay-bg: rgba(2, 8, 9, 0.78);
 }
 
 * {
@@ -27,6 +74,9 @@ body {
   font-family: "Trebuchet MS", "Segoe UI", sans-serif;
   background: var(--bg);
   color: var(--text);
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
 }
 
 .app {
@@ -40,9 +90,9 @@ body {
   width: min(100%, 560px);
   background: var(--panel);
   border: 2px solid var(--border);
-  border-radius: 16px;
+  border-radius: 8px;
   padding: 20px;
-  box-shadow: 6px 6px 0 rgba(61, 52, 39, 0.12);
+  box-shadow: 6px 6px 0 var(--panel-shadow);
 }
 
 .panel__header,
@@ -70,19 +120,35 @@ h1 {
   margin: 18px 0;
   padding: 12px 14px;
   border: 1px solid var(--border);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.45);
+  border-radius: 8px;
+  background: var(--stats-bg);
+  flex-wrap: wrap;
 }
 
 .stat {
   display: grid;
   gap: 4px;
+  min-width: 72px;
 }
 
 .stat__label,
 .controls-copy {
   color: var(--muted);
   font-size: 0.95rem;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.themes {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .board-wrap {
@@ -95,25 +161,37 @@ h1 {
   width: 100%;
   aspect-ratio: 1;
   border: 2px solid var(--border);
-  background-color: #f8f2e3;
+  background-color: var(--board);
   overflow: hidden;
 }
 
 .cell {
   border-radius: 4px;
   margin: 2px;
+  opacity: 0.88;
+  transform: scale(0.82);
+  transition:
+    background-color 90ms linear,
+    opacity 90ms linear,
+    transform 90ms ease;
 }
 
 .cell--snake {
   background: var(--snake);
+  opacity: 1;
+  transform: scale(1);
 }
 
 .cell--head {
   background: var(--snake-head);
+  transform: scale(1.04);
 }
 
 .cell--food {
   background: var(--food);
+  opacity: 1;
+  transform: scale(0.9);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--food) 62%, transparent);
 }
 
 .overlay {
@@ -123,8 +201,12 @@ h1 {
   place-items: center;
   gap: 12px;
   text-align: center;
-  background: rgba(33, 28, 21, 0.66);
-  color: #fffaf0;
+  background: var(--overlay-bg);
+  color: #ffffff;
+}
+
+.overlay[hidden] {
+  display: none;
 }
 
 .overlay__text {
@@ -136,7 +218,7 @@ h1 {
 .button,
 .key {
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 8px;
   background: var(--button);
   color: var(--text);
   font: inherit;
@@ -147,6 +229,11 @@ h1 {
 .button:active,
 .key:active {
   background: var(--button-active);
+}
+
+.button[aria-pressed="true"] {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 2px var(--accent);
 }
 
 .controls-copy {
@@ -166,10 +253,9 @@ h1 {
 }
 
 .keyboard__shell {
-  border-radius: 24px;
+  border-radius: 8px;
   padding: 14px;
   background:
-    radial-gradient(circle at top, rgba(255, 255, 255, 0.18), transparent 42%),
     linear-gradient(180deg, #4a556d 0%, var(--keyboard-frame) 100%);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.24),
@@ -190,7 +276,7 @@ h1 {
 
 .key {
   border: 0;
-  border-radius: 18px;
+  border-radius: 8px;
   background: var(--keyboard-key);
   box-shadow:
     0 5px 0 var(--keyboard-key-shadow),
@@ -240,5 +326,19 @@ h1 {
 @media (min-width: 700px) {
   .keyboard {
     display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .toolbar {
+    display: grid;
+  }
+
+  .themes {
+    justify-content: stretch;
+  }
+
+  .themes .button {
+    flex: 1;
   }
 }

@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Snake</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=6" />
+    <link rel="icon" href="favicon.ico">
   </head>
   <body>
     <main class="app">
@@ -23,8 +24,27 @@
             <strong id="score">0</strong>
           </div>
           <div class="stat">
+            <span class="stat__label">Best</span>
+            <strong id="high-score">0</strong>
+          </div>
+          <div class="stat">
+            <span class="stat__label">Speed</span>
+            <strong id="speed">1x</strong>
+          </div>
+          <div class="stat">
             <span class="stat__label">Status</span>
             <strong id="status">Running</strong>
+          </div>
+        </div>
+
+        <div class="toolbar" aria-label="Game options">
+          <button id="music-button" class="button" type="button" aria-pressed="false">
+            Music Off
+          </button>
+          <div class="themes" aria-label="Theme controls">
+            <button class="button" data-theme="classic" type="button">Classic</button>
+            <button class="button" data-theme="dark" type="button">Dark</button>
+            <button class="button" data-theme="neon" type="button">Neon</button>
           </div>
         </div>
 
@@ -78,6 +98,6 @@
       </section>
     </main>
 
-    <script type="module" src="./src/main.js"></script>
+    <script type="module" src="./src/main.js?v=6"></script>
   </body>
 </html>
